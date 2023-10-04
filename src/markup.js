@@ -19,11 +19,17 @@ function getBadge(stats, name) {
   const totalCount = stats.total;
   const passedCount = totalCount - failedCount;
 
-  const badgeCountText = failedCount > 0 ? `${failedCount}/${totalCount}` : `${passedCount}/${totalCount}`;
-  const badgeStatusText = failedCount > 0 ? 'FAILED' : 'PASSED';
-  const badgeColor = failedCount > 0 ? 'red' : 'brightgreen';
+  const badgeCountText = failedCount > 0 ? `\x1b[31m${failedCount}/${totalCount}\x1b[0m` : `\x1b[32m${passedCount}/${totalCount}\x1b[0m`; // Red for FAILED, Green for PASSED
+  const badgeStatusText = failedCount > 0 ? '\x1b[31mFAILED\x1b[0m' : '\x1b[32mPASSED\x1b[0m'; // Red for FAILED, Green for PASSED
 
-  return `![Generic badge](https://img.shields.io/badge/${name}_${badgeCountText}-${badgeStatusText}-${badgeColor}.svg)`;
+  //return `${name}_${badgeCountText}-${badgeStatusText}`;
+
+  const styledText = `${name}_${badgeCountText}-${badgeStatusText}`;
+  
+  // Apply CSS font style to the styledText
+  const styledOutput = `<span style="font-family: Verdana;">${styledText}</span>`;
+  
+  return styledOutput;
 }
 
 function formatDate(dateToFormat) {
